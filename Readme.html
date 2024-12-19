@@ -79,9 +79,57 @@ urlpatterns=[
 ```
 </div>
 
-<div id="">
+<div id="serializer">
+    <a href="#topic">Topic</a>
+<h1>Serialization:</h1>
+<h3>Most used these two serializer (i) Serializer (ii) ModelSerializer</h3>
+
+`serializers.py`
+
+```py
+from rest_framework import serializers
+from .models import Movie
+class MovieSerializer(serializers.Serializer): # General Serializer
+    class Meta:
+        model=Movie # Select Model
+        fields='__all__' # List of fields
+
+
+class MovieModelSerializer(serializers.ModelSerializer): # Model serializer
+    class Meta:
+        model=Movie # select Model
+        fields='__all__' # select fields
+
+```
+</div>
+
+
+<div id="view">
     <a href="#topic">Topic</a>
 
+<h1>View:</h1>    
+<h3>Two types of views classbased and function based view. classbased view used four type of views (Generic views, Mixins, Concrete class views, Viewsets).
+    But function based views use decorator for view ( @api_view ).
+</h3>
+
+`views.py`
+```py
+@api_view() # need to use decorator for api views
+def post(self): # function based
+    return JsonResponse(self)
+
+class MovieViewSet(viewsets.ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieModelSerializer # using serializer from serializers.py
+```
+
+
+</div>
+
+<div id="viewsets">
+    <a href="#topic">Topic</a>
+<h1>ViewSets:</h1>
+<h3>Most used view are APIView</h3>
 ``
 ```py
 

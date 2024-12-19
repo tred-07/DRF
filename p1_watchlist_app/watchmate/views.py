@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Movie
 from django.http import HttpResponse,JsonResponse
+from rest_framework import viewsets
+from .serializers import MovieModelSerializer,MovieSerializer
 # Create your views here.
 
 
@@ -21,3 +23,7 @@ def movie_detail(request, pk):
     except Movie.DoesNotExist:
         return HttpResponse(status=404) # returns 404 if movie not found
     return JsonResponse(data) # returns json response
+
+class MovieViewSet(viewsets.ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieModelSerializer # using serializer from serializers.py
