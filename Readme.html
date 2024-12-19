@@ -126,12 +126,32 @@ class MovieViewSet(viewsets.ModelViewSet):
 
 </div>
 
-<div id="viewsets">
+<div id="functionbasedview">
     <a href="#topic">Topic</a>
 <h1>ViewSets:</h1>
-<h3>Most used view are APIView</h3>
-``
-```py
+<h3>Function based api view</h3>
 
+`serializers.py`
+```py
+from rest_framework import serializers
+from .models import Movie
+class MovieSerializer(serializers.Serializer): # General Serializer
+    id=serializers.IntegerField(read_only=True)
+    name=serializers.CharField()
+    description=serializers.CharField()
+    active=serializers.BooleanField()
+    # class Meta:
+        # model=Movie # Select Model
+        # fields='__all__' # List of fields
+```
+
+`views.py`
+
+```py
+@decorators.api_view(['GET']) # from rest_framework import decorators
+def movie_list(request):
+    movie=Movie.objects.all()
+    serializer=MovieSerializer(movie,many=True) # many=true means it check all object of serializer individually.
+    return response.Response(serializer.data)
 ```
 </div>
