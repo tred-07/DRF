@@ -298,3 +298,23 @@ class movie_detail(views.APIView):
 
 ```
 </div>
+
+<div id="customSerializerField">
+    <a href="#topic">Topic</a>
+
+<h1>Custom Serializer Field</h1>    
+
+`serializer.py`
+
+```py
+class MovieModelSerializer(serializers.ModelSerializer): # Model serializer . Don not need crud method. This is the benefit of model serializers.
+    length_name = serializers.SerializerMethodField() # get the length
+    class Meta:
+        model=Movie # select Model
+        # fields=['name','description'] # select fields
+        exclude=['name','description']
+
+    def get_length_name(self,obj): # Custom method . this works like getter method
+        return len(obj.name)   
+```
+</div>

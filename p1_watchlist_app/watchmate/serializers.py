@@ -20,7 +20,14 @@ class MovieSerializer(serializers.Serializer): # General Serializer
 
 
 class MovieModelSerializer(serializers.ModelSerializer): # Model serializer . Don not need crud method. This is the benefit of model serializers.
+    length_name = serializers.SerializerMethodField() # get the length
+    is_active = serializers.SerializerMethodField() # get the active
     class Meta:
         model=Movie # select Model
         # fields=['name','description'] # select fields
         exclude=['name','description']
+
+    def get_length_name(self,obj): # Custom method . this works like getter method
+        return len(obj.name)    
+    def get_is_active(self, obj): # Custom method . this works like getter method
+        return obj.active # this returns True if obj is active or False if obj is inactive
