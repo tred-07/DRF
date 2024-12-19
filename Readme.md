@@ -178,6 +178,7 @@ return response.Response(serializer.data)
 
 <strong>Sample CRUD operation</strong>
 <h3>For function based view</h3>
+
 `views.py`
 
 ```py   
