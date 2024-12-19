@@ -84,6 +84,8 @@ urlpatterns=[
 <h1>Serialization:</h1>
 <h3>Most used these two serializer (i) Serializer (ii) ModelSerializer</h3>
 
+<strong>Serializer</strong>
+
 `serializers.py`
 
 ```py
@@ -99,6 +101,19 @@ class MovieModelSerializer(serializers.ModelSerializer): # Model serializer
     class Meta:
         model=Movie # select Model
         fields='__all__' # select fields
+
+```
+
+<strong>ModelSerializer</strong>
+
+`serializers.py`
+
+```py
+class MovieModelSerializer(serializers.ModelSerializer): # Model serializer . Don not need crud method. This is the benefit of model serializers.
+    class Meta:
+        model=Movie # select Model
+        fields='__all__' # select fields
+        exclude=['name','description']
 
 ```
 </div>

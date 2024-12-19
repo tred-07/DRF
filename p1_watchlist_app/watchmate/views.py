@@ -11,11 +11,11 @@ class movie_list(views.APIView):
 
     def get(self,request): # instead of get condition and can not use if serializer.is_valid() in get method
         movies=Movie.objects.all()
-        serializer=MovieSerializer(movies,many=True)
+        serializer=MovieModelSerializer(movies,many=True)
         return response.Response(serializer.data)
         
     def post(self,request): 
-        serializer=MovieSerializer(data=request.data)
+        serializer=MovieModelSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return response.Response(serializer.data)
@@ -26,11 +26,11 @@ class movie_list(views.APIView):
 class movie_detail(views.APIView):
     def get(self,request,pk): # r = read operation
         movie=Movie.objects.get(pk=pk)
-        serializer=MovieSerializer(movie)
+        serializer=MovieModelSerializer(movie)
         return response.Response(serializer.data)
     
     def post(self,request): # c = create operation
-        serializer=MovieSerializer(data=request.data)
+        serializer=MovieModelSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return response.Response(serializer.data)
@@ -39,7 +39,7 @@ class movie_detail(views.APIView):
         
     def put(self,request,pk): # u = update operation
         movie=Movie.objects.get(pk=pk)
-        serializer=MovieSerializer(movie,data=request.data)
+        serializer=MovieModelSerializer(movie,data=request.data)
         if serializer.is_valid():
             serializer.save()
             return response.Response(serializer.data)

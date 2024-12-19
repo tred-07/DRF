@@ -19,7 +19,8 @@ class MovieSerializer(serializers.Serializer): # General Serializer
         return instance 
 
 
-class MovieModelSerializer(serializers.ModelSerializer): # Model serializer
+class MovieModelSerializer(serializers.ModelSerializer): # Model serializer . Don not need crud method. This is the benefit of model serializers.
     class Meta:
         model=Movie # select Model
-        fields='__all__' # select fields
+        # fields=['name','description'] # select fields
+        exclude=['name','description']
