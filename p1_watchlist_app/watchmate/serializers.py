@@ -7,9 +7,8 @@ class WatchListSerializer(serializers.ModelSerializer): # Model serializer . Don
         fields='__all__'
 
 
-class StreamPlatformSerializer(serializers.ModelSerializer):
-    watchlist=serializers.HyperlinkedRelatedField(many=True,
-read_only=True,view_name='movie_detail')
+class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
+    watchlist=WatchListSerializer(many=True,read_only=True)
     class Meta:
         model=StreamPlatform
         fields='__all__'
