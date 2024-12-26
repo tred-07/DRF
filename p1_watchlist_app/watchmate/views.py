@@ -1,78 +1,78 @@
-# from django.shortcuts import render,redirect
-# from .models import WatchList,StreamPlatform
-# from django.http import HttpResponse,JsonResponse
-# from rest_framework import viewsets,views
-# from .serializers import WatchListSerializer,StreamPlatformSerializer
-# from rest_framework import decorators,response,status
+from django.shortcuts import render,redirect
+from .models import WatchList,StreamPlatform
+from django.http import HttpResponse,JsonResponse
+from rest_framework import viewsets,views
+from .serializers import WatchListSerializer,StreamPlatformSerializer
+from rest_framework import decorators,response,status
 
-# # Create your views here.
+# Create your views here.
 
-# class movie_list(views.APIView):
+class movie_list(views.APIView):
 
-#     def get(self,request): # instead of get condition and can not use if serializer.is_valid() in get method
-#         movies=WatchList.objects.all()
-#         serializer=WatchListSerializer(movies,many=True)
-#         return response.Response(serializer.data)
+    def get(self,request): # instead of get condition and can not use if serializer.is_valid() in get method
+        movies=WatchList.objects.all()
+        serializer=WatchListSerializer(movies,many=True)
+        return response.Response(serializer.data)
         
-#     def post(self,request): 
-#         serializer=WatchListSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return response.Response(serializer.data)
-#         else:
-#             return response.Response(serializer.errors)
+    def post(self,request): 
+        serializer=WatchListSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data)
+        else:
+            return response.Response(serializer.errors)
 
 
-# class movie_detail(views.APIView):
-#     def get(self,request,pk): # r = read operation
-#         movie=WatchList.objects.get(pk=pk)
-#         serializer=WatchListSerializer(movie)
-#         return response.Response(serializer.data)
+class movie_detail(views.APIView):
+    def get(self,request,pk): # r = read operation
+        movie=WatchList.objects.get(pk=pk)
+        serializer=WatchListSerializer(movie)
+        return response.Response(serializer.data)
     
-#     def post(self,request): # c = create operation
-#         serializer=WatchListSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return response.Response(serializer.data)
-#         else:
-#             return response.Response(serializer.errors)
+    def post(self,request): # c = create operation
+        serializer=WatchListSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data)
+        else:
+            return response.Response(serializer.errors)
         
-#     def put(self,request,pk): # u = update operation
-#         movie=WatchList.objects.get(pk=pk)
-#         serializer=WatchListSerializer(movie,data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return response.Response(serializer.data)
-#             # return redirect('movie_list')
-#         else:
-#             return response.Response(serializer.errors)
-#             # return redirect('movie_detail')    
+    def put(self,request,pk): # u = update operation
+        movie=WatchList.objects.get(pk=pk)
+        serializer=WatchListSerializer(movie,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data)
+            # return redirect('movie_list')
+        else:
+            return response.Response(serializer.errors)
+            # return redirect('movie_detail')    
         
-#     def delete(self,request,pk): # d = delete operation
-#             movie=WatchList.objects.get(pk=pk)
-#             movie.delete()
-#             return redirect('movie_list')
+    def delete(self,request,pk): # d = delete operation
+            movie=WatchList.objects.get(pk=pk)
+            movie.delete()
+            return redirect('movie_list')
 
 
 
-# class StreamListAV(views.APIView):
-#     def get(self,request):
-#         platform=StreamPlatform.objects.all()
-#         serializer_class=StreamPlatformSerializer(platform,many=True)
-#         return response.Response(serializer_class.data)
-#     def post(self,request):
-#         serializer=StreamPlatformSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return response.Response(serializer.data)
-#         else:
-#             return response.Response(serializer.errors)
+class StreamListAV(views.APIView):
+    def get(self,request):
+        platform=StreamPlatform.objects.all()
+        serializer_class=StreamPlatformSerializer(platform,many=True,context={'request': request})
+        return response.Response(serializer_class.data)
+    def post(self,request):
+        serializer=StreamPlatformSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data)
+        else:
+            return response.Response(serializer.errors)
         
 
-# class StreamDetailAV(views.APIView):
-#     def get(self,request,pk):
-#         stream=StreamPlatform.objects.get(pk=pk)
-#         serializer=StreamPlatformSerializer(stream)
-#         return response.Response(serializer.data)        
+class StreamDetailAV(views.APIView):
+    def get(self,request,pk):
+        stream=StreamPlatform.objects.get(pk=pk)
+        serializer=StreamPlatformSerializer(stream)
+        return response.Response(serializer.data)        
 
 
