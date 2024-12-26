@@ -133,6 +133,34 @@ fields='__all__' # select fields
 exclude=['name','description']
 
 ```
+
+<strong>Hyperlinked Model Serializer</strong>
+
+`serializers.py`
+
+```py
+class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
+    watchlist=WatchListSerializer(many=True,read_only=True)
+    class Meta:
+        model=StreamPlatform
+        fields='__all__'
+```
+
+`views.py`
+
+```py
+class StreamListAV(views.APIView):
+    def get(self,request):
+        platform=StreamPlatform.objects.all()
+        serializer_class=StreamPlatformSerializer(platform,many=True,context={'request': request})
+        return response.Response(serializer_class.data)
+
+class StreamDetailAV(views.APIView):
+    def get(self,request,pk):
+        stream=StreamPlatform.objects.get(pk=pk)
+        serializer=StreamPlatformSerializer(stream,context={'request': request})
+        return response.Response(serializer.data)         
+```
 </div>
 
 
@@ -357,7 +385,7 @@ python manage.py flush
 `For update model, you can use this command:`
 
 ```
-python manage.py makemigrations
+python manage.py makemigrations appName
 ```
 
 ```
@@ -498,11 +526,10 @@ class StreamListAV(views.APIView):
         serializer_class=StreamPlatformSerializer(platform,many=True,context={'request': request}) # this context is for HyperlinkedRelatedField
         return response.Response(serializer_class.data)
 ```
-
-
-<h2>Hyperlinked
 <h3><a href="https://www.django-rest-framework.org/api-guide/relations/" target="_blank">For more visit here</a></h3>
 </div>
+
+
 </div>
 </main>
 </body>

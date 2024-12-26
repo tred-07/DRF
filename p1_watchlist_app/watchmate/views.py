@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
-from .models import WatchList,StreamPlatform
+from .models import WatchList,StreamPlatform,Review
 from django.http import HttpResponse,JsonResponse
 from rest_framework import viewsets,views
-from .serializers import WatchListSerializer,StreamPlatformSerializer
+from .serializers import WatchListSerializer,StreamPlatformSerializer,ReviewListSerializer
 from rest_framework import decorators,response,status
 
 # Create your views here.
@@ -76,3 +76,15 @@ class StreamDetailAV(views.APIView):
         return response.Response(serializer.data)        
 
 
+class ReviewAV(views.APIView):
+    def get(self,request):
+        review=Review.objects.all()
+        serializer=ReviewListSerializer(review,many=True)
+        return response.Response(serializer.data)
+    def post(self,request):
+        serializer=ReviewListSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data)
+        else:
+            return response.Response(serializer.errors)

@@ -1,14 +1,22 @@
 from rest_framework import serializers
-from .models import WatchList,StreamPlatform
+from .models import WatchList,StreamPlatform,Review
 
 class WatchListSerializer(serializers.ModelSerializer): # Model serializer . Don not need crud method. This is the benefit of model serializers.
+    reviews=serializers.StringRelatedField(many=True,read_only=True)
     class Meta:
         model=WatchList # select Model
         fields='__all__'
 
 
 class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
-    watchlist=WatchListSerializer(many=True,read_only=True)
+    # watchlists=WatchListSerializer(many=True,read_only=True)
+    
     class Meta:
         model=StreamPlatform
+        fields='__all__'
+
+
+class ReviewListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Review
         fields='__all__'
