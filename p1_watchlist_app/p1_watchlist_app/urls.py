@@ -3,5 +3,5 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('watchmate/', include('watchmate.urls')),  # Add this line
+    # path('watchmate/', include('watchmate.urls')),  # Add this line
 ]

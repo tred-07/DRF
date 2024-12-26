@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="74b8d427-3094-4481-9e39-9bc25a61fa0f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/p1_watchlist_app/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/p1_watchlist_app/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/p1_watchlist_app/p1_watchlist_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/p1_watchlist_app/p1_watchlist_app/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/p1_watchlist_app/watchmate/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/p1_watchlist_app/watchmate/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/p1_watchlist_app/watchmate/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/p1_watchlist_app/watchmate/migrations/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/p1_watchlist_app/watchmate/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/p1_watchlist_app/watchmate/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/p1_watchlist_app/watchmate/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/p1_watchlist_app/watchmate/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/p1_watchlist_app/watchmate/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/p1_watchlist_app/watchmate/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/p1_watchlist_app/watchmate/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/p1_watchlist_app/watchmate/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,9 +20,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2qXvzXbJLo966ysuf8qBtjnXLvw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -25,15 +33,17 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/workstation/Desktop/Projects/DRF-2/DRF",
+    "last_opened_file_path": "/home/workstation-l01/Desktop/Projects/DRF-2/DRF",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.intellij.pycharm.community.ide.impl.configuration.PythonContentEntriesConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-WS-243.22562.222" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-PY-243.22562.180" />
+        <option value="bundled-python-sdk-85c76a3b01b3-9a18a617cbe4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.22562.180" />
       </set>
     </attachedChunks>
   </component>
@@ -46,6 +56,7 @@
       <option name="presentableId" value="Default" />
       <updated>1734821997430</updated>
       <workItem from="1734821999656" duration="83000" />
+      <workItem from="1735229032249" duration="270000" />
     </task>
     <servers />
   </component>
