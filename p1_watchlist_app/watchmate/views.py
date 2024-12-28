@@ -3,7 +3,7 @@ from .models import WatchList,StreamPlatform,Review
 from django.http import HttpResponse,JsonResponse
 from rest_framework import viewsets,views
 from .serializers import WatchListSerializer,StreamPlatformSerializer,ReviewListSerializer
-from rest_framework import decorators,response,status
+from rest_framework import decorators,response,status,mixins,generics
 
 # Create your views here.
 
@@ -88,3 +88,19 @@ class ReviewAV(views.APIView):
             return response.Response(serializer.data)
         else:
             return response.Response(serializer.errors)
+        
+class ReviewList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
+    queryset=Review.objects.all()
+    serializer_class=ReviewListSerializer
+    def get(self,request):
+        return self.list(request)
+    def post(self,request):
+        return self.create(request)
+    
+class ReviewDetail(mixins.RetrieveModelMixin,generics.GenericAPIView):
+    queryset=Review.objects.all()
+    serializer_class=ReviewListSerializer
+    def get(self,request,pk):
+        return self.retrieve(request)
+    def put(self,request,pk):
+        return self.update(request,pk)
