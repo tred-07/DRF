@@ -569,6 +569,11 @@ class ReviewDetail(mixins.RetrieveModelMixin,generics.GenericAPIView):
 <h3>Output:</h3>
 <img src="./img/Mixins2.png" alt="">
 </div>
+<div id="concreteClassView">
+    <a href="#topic"></a>
+<h1>Concrete Class View:</h1>
+<p></p>
+</div>
 </div>
 </main>
 </body>
