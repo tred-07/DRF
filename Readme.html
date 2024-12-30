@@ -641,6 +641,13 @@ REST_FRAMEWORK = { # if we use use this only authenticated user can access the a
 }
 ```
 
+`views.py`
+
+```py
+from rest_framework import permissions
+permission_classes=[permissions.IsAuthenticated] #nIt is objeect level permission. It works for specific view or object.
+```
+
 </div>
 
 <div id="authentication">
