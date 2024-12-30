@@ -8,7 +8,7 @@ from .permission import AdmimOrReadOnly
 # Create your views here.
 
 class movie_list(views.APIView):
-
+    permission_classes=[AdmimOrReadOnly]
     def get(self,request): # instead of get condition and can not use if serializer.is_valid() in get method
         movies=WatchList.objects.all()
         serializer=WatchListSerializer(movies,many=True)
@@ -24,7 +24,7 @@ class movie_list(views.APIView):
 
 
 class movie_detail(views.APIView):
-    permission_classes=[permissions.IsAuthenticated]
+    permission_classes=[AdmimOrReadOnly]
     def get(self,request,pk): # r = read operation
         movie=WatchList.objects.get(pk=pk)
         serializer=WatchListSerializer(movie)
@@ -57,7 +57,7 @@ class movie_detail(views.APIView):
 
 
 class StreamListAV(views.APIView):
-    permission_classes=[permissions.IsAdminUser]
+    permission_classes=[AdmimOrReadOnly]
     def get(self,request):
         platform=StreamPlatform.objects.all()
         serializer_class=StreamPlatformSerializer(platform,many=True,context={'request': request})
@@ -72,7 +72,7 @@ class StreamListAV(views.APIView):
         
 
 class StreamDetailAV(views.APIView):
-    permission_classes=[permissions.IsAdminUser]
+    permission_classes=[AdmimOrReadOnly]
     def get(self,request,pk):
         stream=StreamPlatform.objects.get(pk=pk)
         serializer=StreamPlatformSerializer(stream,context={'request': request})
@@ -80,8 +80,8 @@ class StreamDetailAV(views.APIView):
 
 
 class CreateReview(generics.CreateAPIView):
+    permission_classes=[AdmimOrReadOnly]
     serializer_class=ReviewListSerializer
-    permission_classes=[permissions.IsAuthenticated]
     # queryset=Review.objects.all()
     def get_queryset(self):
         pk=self.kwargs.get('pk')
@@ -96,11 +96,11 @@ class CreateReview(generics.CreateAPIView):
         serializer.save(watchlist=watchlist,review_user=review_user)
         
 class ReviewList(generics.ListCreateAPIView): #ListAPIView with CreateAPIView is a class based view that provides get and post method handlers.
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes=[AdmimOrReadOnly]
     queryset=Review.objects.all()
     serializer_class=ReviewListSerializer
     
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView): # RetrieveUpdateDestroyAPIView is a class based view that provides get, put, patch and delete method handlers.
-    permission_classes =[permissions.IsAuthenticatedOrReadOnly]
+    permission_classes=[AdmimOrReadOnly]
     queryset=Review.objects.all()
     serializer_class=ReviewListSerializer
