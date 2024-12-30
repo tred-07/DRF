@@ -4,7 +4,7 @@ from django.http import HttpResponse,JsonResponse
 from rest_framework import viewsets,views
 from .serializers import WatchListSerializer,StreamPlatformSerializer,ReviewListSerializer
 from rest_framework import decorators,response,status,mixins,generics,serializers,permissions
-
+from .permission import AdmimOrReadOnly
 # Create your views here.
 
 class movie_list(views.APIView):
