@@ -21,6 +21,26 @@
 <li><a href="#customSerializerField">Custom Serializer Field</a></li>
 <li><a href="#updatingModel">Update Model</a></li>
 <li><a href="#nestedSerializer">Nested Serializer</a></li>
+<li><a href="#seriliazerRelation">Serializer Relation</a></li>
+<li><a href="#mixins">Mixins</a></li>
+<li><a href="#concreteClassView">Concrete Class View</a></li>
+<li><a href="#customQueryset">Custom Queryset</a></li>
+<li><a href="#viewSetsAndRouters">View Sets And Routers</a></li>
+<li><a href="#temporaryLoginLogout">Temporary Login And Logout</a></li>
+<li><a href="#permissions">Permissions</a></li>
+<li><a href="#customPermissionsClass">Custom Permissions Class</a></li>
+<li><a href="#basicAuthentication">Basic Authentication</a></li>
+<li><a href="tokenAuthenticationIntro">Token Authentication</a></li>
+<li><a href="#tokenAuthorizationLogin">Token Authorization For Login</a></li>
+<li><a href="#tokenAuthorizationForRegistrationAndGetToken">Token Authorization While Registration Complete</a></li>
+<li><a href="#ogOut">Token delete while logout</a></li>
+<li><a href="#jwt">JWT</a></li>
+<li><a href="#jwtRotateRefreshToken">JWT Rotation Refresh Token</a></li>
+<li><a href="#jwtTokenCreationWhileRegistration">JWT Token Creation While Registration</a></li>
+<li><a href="#throttlingIntro">Throttling Intro</a></li>
+<li><a href="#throttleRate">Throttle Rate Limiting</a></li>
+<li><a href="#customRateAndThrottle">Custom Rate Throttle</a></li>
+<li><a href="#pagination">Pagination</a></li>
 </ol>
 </div>
 
@@ -904,9 +924,80 @@ urlpatterns = [
 <h3>Using refresh token. When use it, it give another access token which validation time is 5 minutes again.</h3>
 <img src="./img/JWT3.png" alt="">
 </div>
+
+<div id="jwtRotateRefreshToken">
+    <a href="#topic">Topic</a>
+    <h1>JWT Rotate Refresh Token</h1>
+    <h3>It provides JWT Rotate Refresh Token. For django user <a href="https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html#rotate-refresh-tokens">Simple JWT</a></h3>
+
+    <h3>Just add this line</h3>
+
+`settings.py`
+
+```py
+SIMPLE_JWT
+{
+    ... 
+    'ROTATE_REFRESH_TOKENS': True,
+}
+```
+</div>
+
+<div id="jwtTokenCreationWhileRegistration">
+    <a href="#topic">Topic</a>
+    <h1>JWT Token Creation While Registration</h1>
+    <h3>It provides JWT Token Creation While Registration. For django user <a href="https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html">Simple JWT</a></h3>
+    <h3>Use this format for testing in postman.</h3>
+    <h3>Code part will update later.</h3>
+</div>
+
+<div id="throttlingIntro">
+    <a href="#topic">Topic</a>
+    <h1>Throttling: Control user by number of request. An authorized user can send unlimited request where unauthorized can send a certain number.</h1>
+    <h3><a href="https://www.django-rest-framework.org/api-guide/throttling/">For more</a></h3>
+</div>
+
+<div id="throttleRate">
+<a href="#topic">Topic</a>
+<h1>Throttle Rate Limiting</h1>
+<h3>For example, allow 100 requests per hour per IP address.</h3>
+<h3>To implement this, install the rest_framework_throttling package.</h3>
+<h3>Command for install throttling</h3>
+
+`settings.py`
+    
+```py
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+       'rest_framework.throttling.AnonRateThrottle',
+       'rest_framework.throttling.UserRateThrottle'
+        ],
+        'DEFAULT_THROTTLE_RATES': {
+            'anon': '10/day',
+            'user': '1000/day'
+        }
+    }
+```
+
+<h3>Input and output will be like this.</h3>
+<img src="./img/Throttling1.png" alt="">
+</div>
+
+<div id="customRateAndThrottle">
+    <a href="#topic">Topic</a>
+<h1>Custom Rate and Throttle</h1>
+<h3>It provides custom rate and throttle.</h3>
+<h3>To implement this, create a custom throttle class and register it in the DEFAULT_THROTTLE_CLASSES list.</h3>
+<h3>Code part will update within 10 th January, 2025</h3>
+</div>
+
+<div id="pagination">
+    <a href="#topic">Topic</a>
+</div>
 </div>
 </main>
 </body>
 </html>
+
 
 
