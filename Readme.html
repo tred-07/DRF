@@ -741,12 +741,25 @@ REST_FRAMEWORK = {
 <h3>Use this format for testing in postman.</h3>
 <img src="./img/TokenAuthentication1.png" alt="">
 </div>
+
 <div id="tokenAuthorizationLogin">
     <a href="#topic">Topic</a>
 <h1>Token Authorization Login</h1>
 <p>It provides token authorization login.</p>
 
-`views.py`
+`urls.py`
+
+```py
+from rest_framework.authtoken.views import obtain_auth_token
+from django.urls import path,include
+urlpatterns = [
+    path('login/', obtain_auth_token, name='login'),  # Add this line
+]
+```
+
+<h3>Use this format for testing in postman.</h3>
+<h3>Data input format be like this. Before input please confirm that postman has no token.</h3>
+<img src="./img/TokenAuthorization2.png" alt="">
 </div>
 </div>
 </main>
