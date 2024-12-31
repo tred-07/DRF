@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'watchmate'
+    'watchmate',
+    'user_app',
 ]
 
 MIDDLEWARE = [
