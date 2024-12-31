@@ -852,6 +852,49 @@ path('logout/', logOut, name='logout'),  # Add this line for log out
 
 <h3>Now login first and save the token in token and then logout url.</h3>
 </div>
+
+
+<div id="jwt">
+    <a href="#topic">Topic</a>
+    <h1>JSON Web Tokens (JWT)</h1>
+    <h3>It provides JSON Web Tokens (JWT). For django user <a href="https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html">Simple JWT</a></h3>
+
+`Command for install jwt`
+
+```
+pip install djangorestframework-simplejwt
+```
+
+`settings.py`
+
+```py
+REST_FRAMEWORK = {
+    ...
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        ...
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # instead of TokenAuthentication,BasicAuthentication
+    )
+    ...
+}
+```
+
+`urls.py`
+
+```py
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+urlpatterns = [
+    ...
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    ...
+]
+```
+<h3>Generally two tokens create in JWT. (i) Access Token ( Short Term After 5 minutes it automatically destroy), (ii) Refresh Token ( Long Term After 24 hours it automatically destroy)</h3>
+</div>
 </div>
 </main>
 </body>
