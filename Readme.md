@@ -901,7 +901,7 @@ urlpatterns = [
 <h3>Using access token</h3>
 <img src="./img/JWT2.png" alt="">
 
-<h3>Using refresh token. When use it, it give another access token whic validation time is 5 minutes again.</h3>
+<h3>Using refresh token. When use it, it give another access token which validation time is 5 minutes again.</h3>
 <img src="./img/JWT3.png" alt="">
 </div>
 </div>
