@@ -492,7 +492,8 @@ class StreamPlatformSerializer(serializers.ModelSerializer):
 <div id="seriliazerRelation">
     <li><a href="#topic">Topic</a></li>
     <h1>Serializer Relation</h1>
-    <p>It only show specific information</p>
+    <h3>It only show specific information</h3>
+
 <h2>StringRelatedField</h2>
 
 `serializers.py`
@@ -532,7 +533,8 @@ class StreamListAV(views.APIView):
 <div id="mixins">
     <a href="#topic">Topic</a>
     <h1>Mixins</h1>
-    <p>Mixins create HTML form and json format. </p>
+    <h3>Mixins create HTML form and json format. </h3>
+
 
 <h2>ListModelMixin: Used for all attribute.</h2>
     
@@ -572,7 +574,8 @@ class ReviewDetail(mixins.RetrieveModelMixin,generics.GenericAPIView):
 <div id="concreteClassView">
     <a href="#topic"></a>
 <h1>Concrete Class View:</h1>
-<p></p>
+<h3></h3>
+
 
 `views.py`
 
@@ -589,7 +592,8 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView): # RetrieveUpdateDestr
 <div id="customQueryset">
     <a href="#topic">Topic</a>
 <h1>Custom Queryset</h1>
-<p>It is used for custom queryset. Like as when we transfer money from our own bank account to another account we do not need to enter sender account address but we need to enter receiver account address. This kind of case handel this custom queryset. But which attribute is set auto in post method time, we need to exclude this from serializer.</p>
+<h3>It is used for custom queryset. Like as when we transfer money from our own bank account to another account we do not need to enter sender account address but we need to enter receiver account address. This kind of case handel this custom queryset. But which attribute is set auto in post method time, we need to exclude this from serializer.</h3>
+
 
 `views.py`
 
@@ -617,7 +621,8 @@ class CreateReview(generics.CreateAPIView):
 <div id="temporaryLoginLogout">
     <a href="#topic">Topic</a>
 <h1>Temporary Login and Logout</h1>
-<p>It provides a simple login logout forms.</p>
+<h3>It provides a simple login logout forms.</h3>
+
 
 `urls.py`
 
@@ -629,7 +634,8 @@ path('api-auth/', include('rest_framework.urls')),  # Add this line
 <div id="permission">
     <a href="#topic">Topic</a>
 <h1>Permission</h1>
-<p>It provides authentication for API.</p>
+<h3>It provides authentication for API.</h3>
+
 
 `settings.py`
 
@@ -654,7 +660,8 @@ permission_classes=[permissions.IsAuthenticated] #nIt is objeect level permissio
 <div id="customPermissionsClass">
     <a href="#topic">Topic</a>
 <h1>Custom Permissions Class</h1>
-<p>It provides custom permission class.</p>
+<h3>It provides custom permission class.</h3>
+
 
 `permissions.py`
 
@@ -686,7 +693,8 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView): # RetrieveUpdateDestr
 <div id="basicAuthentication">
     <a href="#topic">Topic</a>
 <h1>Basic Authentication</h1>
-<p>It provides authentication for API. Not recommended. Just used for testing. Use postman for authentication.</p>
+<h3>It provides authentication for API. Not recommended. Just used for testing. Use postman for authentication.</h3>
+
 
 `settings.py`
 
@@ -712,14 +720,16 @@ class movie_list(views.APIView):
         return response.Response(serializer.data)
 ```
 
-<p>User password must be base64 encode format. Just search base64 converter on browser and convert this format username:password.</p>
+<h3>User password must be base64 encode format. Just search base64 converter on browser and convert this format username:password.</h3>
+
 <img src="./img/BasicAutentication1.png" alt="">
 </div>    
 
 <div id="tokenAuthenticationIntro">
     <a href="#topic">Topic</a>  
 <h1>Token Authentication</h1>
-<p>Set Up: Add 'rest_framework.authtoken' on Intalled Apps.</p>
+<h3>Set Up: Add 'rest_framework.authtoken' on Intalled Apps.</h3>
+
 
 `settings.py`
 
@@ -736,7 +746,8 @@ REST_FRAMEWORK = {
 }
 ```
 
-<p>Migrate the model. Before migrating delete all data from model. Otherwise it gives several errors.</p>
+<h3>Migrate the model. Before migrating delete all data from model. Otherwise it gives several errors.</h3>
+
 
 <h3>Use this format for testing in postman.</h3>
 <img src="./img/TokenAuthentication1.png" alt="">
@@ -745,7 +756,8 @@ REST_FRAMEWORK = {
 <div id="tokenAuthorizationLogin">
     <a href="#topic">Topic</a>
 <h1>Token Authorization Login</h1>
-<p>It provides token authorization login.</p>
+<h3>It provides token authorization login.</h3>
+
 
 `urls.py`
 
@@ -759,6 +771,52 @@ urlpatterns = [
 <h3>Use this format for testing in postman.</h3>
 <h3>Data input format be like this. Before input please confirm that postman has no token.</h3>
 <img src="./img/TokenAuthorization2.png" alt="">
+</div>
+
+<div id="tokenAuthorizationForRegistrationAndGetToken">
+    <a href="#topic">Topic</a>
+<h1>Token Authorization For Registration and Get Token</h1>
+<h3>It provides token authorization for registration and get token.</h3>
+
+
+`models.py`
+
+```py
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+```
+
+`views.py`
+
+```py
+@decorators.api_view(["POST",])
+def registeration_view(r):
+    if r.method == "POST":
+        serializer = RegistrationSerializer(data=r.data)
+        data={}
+        if serializer.is_valid():
+            account=serializer.save()
+            data["response"] = "successfully registered new user."
+            data["username"] = account.username
+            data["email"] = account.email
+            token=Token.objects.get(user=account).key
+            data["token"] = token
+            # return response.Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            data= serializer.errors
+            # return response.Response(data, status=status.HTTP_400_BAD_REQUEST)
+        return response.Response(data)
+```
+
+<h3>Input and output format will be like this.</h3>
+<img src="./img/TokenAuthorizationRegistrationAndGetToken.png" alt="">
 </div>
 </div>
 </main>
