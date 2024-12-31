@@ -5,10 +5,12 @@ from rest_framework import viewsets,views
 from .serializers import WatchListSerializer,StreamPlatformSerializer,ReviewListSerializer
 from rest_framework import decorators,response,status,mixins,generics,serializers,permissions
 from .permission import AdmimOrReadOnly,ReviewUserOrReadOnly
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 # Create your views here.
 
 class movie_list(views.APIView):
-    permission_classes=[AdmimOrReadOnly]
+    permission_classes=[permissions.IsAuthenticated]
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
     def get(self,request): # instead of get condition and can not use if serializer.is_valid() in get method
         movies=WatchList.objects.all()
         serializer=WatchListSerializer(movies,many=True)
