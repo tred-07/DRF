@@ -904,9 +904,28 @@ urlpatterns = [
 <h3>Using refresh token. When use it, it give another access token which validation time is 5 minutes again.</h3>
 <img src="./img/JWT3.png" alt="">
 </div>
+
+<div id="jwtRotateRefreshToken">
+    <a href="#topic">Topic</a>
+    <h1>JWT Rotate Refresh Token</h1>
+    <h3>It provides JWT Rotate Refresh Token. For django user <a href="https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html#rotate-refresh-tokens">Simple JWT</a></h3>
+
+    <h3>Just add this line</h3>
+
+`settings.py`
+
+```py
+SIMPLE_JWT
+{
+    ... 
+    'ROTATE_REFRESH_TOKENS': True,
+}
+```
+</div>
 </div>
 </main>
 </body>
 </html>
+
 
 
