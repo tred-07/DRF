@@ -818,6 +818,92 @@ def registeration_view(r):
 <h3>Input and output format will be like this.</h3>
 <img src="./img/TokenAuthorizationRegistrationAndGetToken.png" alt="">
 </div>
+
+<div id="logOut">
+    <a href="#topic">Topic</a>
+<h1>Log Out</h1>
+<h3>It provides log out.</h3>
+
+
+`views.py`
+
+```py
+
+@decorators.api_view(["POST",])
+def logOut(request):
+    if request.method == "POST":
+       request.user.auth_token.delete()
+       return response.Response(status=status.HTTP_200_OK)
+
+```
+
+`urls.py`
+
+```py
+from rest_framework.authtoken.views import obtain_auth_token
+from django.urls import path,include
+from .views import registeration_view,logOut
+urlpatterns=[
+...
+path('logout/', logOut, name='logout'),  # Add this line for log out
+...
+]
+```
+
+<h3>Now login first and save the token in token and then logout url.</h3>
+</div>
+
+
+<div id="jwt">
+    <a href="#topic">Topic</a>
+    <h1>JSON Web Tokens (JWT)</h1>
+    <h3>It provides JSON Web Tokens (JWT). For django user <a href="https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html">Simple JWT</a></h3>
+
+`Command for install jwt`
+
+```
+pip install djangorestframework-simplejwt
+```
+
+`settings.py`
+
+```py
+REST_FRAMEWORK = {
+    ...
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        ...
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # instead of TokenAuthentication,BasicAuthentication
+    )
+    ...
+}
+```
+
+`urls.py`
+
+```py
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+urlpatterns = [
+    ...
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    ...
+]
+```
+<h3>Generally two tokens create in JWT. (i) Access Token ( Short Term After 5 minutes it automatically destroy), (ii) Refresh Token ( Long Term After 24 hours it automatically destroy)</h3>
+<h3>Input and output format be like this.</h3>
+<h3>For getting tokens log in.</h3>
+<img src="./img/JWT1.png" alt="">
+
+<h3>Using access token</h3>
+<img src="./img/JWT2.png" alt="">
+
+<h3>Using refresh token. When use it, it give another access token whic validation time is 5 minutes again.</h3>
+<img src="./img/JWT3.png" alt="">
+</div>
 </div>
 </main>
 </body>
