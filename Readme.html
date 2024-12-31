@@ -818,6 +818,38 @@ def registeration_view(r):
 <h3>Input and output format will be like this.</h3>
 <img src="./img/TokenAuthorizationRegistrationAndGetToken.png" alt="">
 </div>
+
+<div id="logOut">
+    <a href="#topic">Topic</a>
+<h1>Log Out</h1>
+<h3>It provides log out.</h3>
+
+
+`views.py`
+
+```py
+
+@decorators.api_view(["POST",])
+def logOut(request):
+    if request.method == "POST":
+       request.user.auth_token.delete()
+       return response.Response(status=status.HTTP_200_OK)
+
+```
+
+`urls.py`
+
+```py
+from rest_framework.authtoken.views import obtain_auth_token
+from django.urls import path,include
+from .views import registeration_view,logOut
+urlpatterns=[
+...
+path('logout/', logOut, name='logout'),  # Add this line for log out
+...
+]
+```
+</div>
 </div>
 </main>
 </body>

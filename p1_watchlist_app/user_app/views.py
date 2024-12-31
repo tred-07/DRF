@@ -5,6 +5,13 @@ from rest_framework.authtoken.models import Token
 from . import models
 # Create your views here.
 
+
+@decorators.api_view(["POST",])
+def logOut(request):
+    if request.method == "POST":
+       request.user.auth_token.delete()
+       return response.Response(status=status.HTTP_200_OK)
+
 @decorators.api_view(["POST",])
 def registeration_view(r):
     if r.method == "POST":
