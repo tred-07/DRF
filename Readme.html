@@ -962,13 +962,14 @@ SIMPLE_JWT
 <h1>Throttle Rate Limiting</h1>
 <h3>For example, allow 100 requests per hour per IP address.</h3>
 <h3>To implement this, install the rest_framework_throttling package.</h3>
-<h3>Command for install throttling</h3>
+
+<h3>For globally throttle</h3>
 
 `settings.py`
     
 ```py
 REST_FRAMEWORK = {
-    'DEFAULT_THROTTLE_CLASSES': [
+    'DEFAULT_THROTTLE_CLASSES': [ # this is for globally available
        'rest_framework.throttling.AnonRateThrottle',
        'rest_framework.throttling.UserRateThrottle'
         ],
@@ -977,6 +978,47 @@ REST_FRAMEWORK = {
             'user': '1000/day'
         }
     }
+```
+
+<h3>For custom throttle</h3>
+
+`settings.py`
+
+```py
+REST_FRAMEWORK = {
+    #'DEFAULT_THROTTLE_CLASSES': [ # this is for globally available
+    #   'rest_framework.throttling.AnonRateThrottle', # comment this
+    #   'rest_framework.throttling.UserRateThrottle', # comment this
+    #   'rest_framework.throttling.CustomThrottle' # comment this
+    #    ],
+        'DEFAULT_THROTTLE_RATES': {
+            'anon': '10/day',
+            'user': '1000/day',
+            'custom': '100/day'
+        }
+    }
+```
+
+`views.py`
+
+```py
+from rest_framework.throttling import UserRateThrottle,AnonRateThrottle
+class movie_list(views.APIView):
+    # permission_classes=[permissions.IsAuthenticated]
+    throttle_classes=[UserRateThrottle,AnonRateThrottle] # this is applied for this classbased view only
+    def get(self,request): # instead of get condition and can not use if serializer.is_valid() in get method
+        movies=WatchList.objects.all()
+        serializer=WatchListSerializer(movies,many=True)
+        return response.Response(serializer.data)
+        
+    def post(self,request): 
+        serializer=WatchListSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data)
+        else:
+            return response.Response(serializer.errors)
+
 ```
 
 <h3>Input and output will be like this.</h3>

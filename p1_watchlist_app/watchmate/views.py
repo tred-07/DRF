@@ -6,10 +6,12 @@ from .serializers import WatchListSerializer,StreamPlatformSerializer,ReviewList
 from rest_framework import decorators,response,status,mixins,generics,serializers,permissions
 from .permission import AdmimOrReadOnly,ReviewUserOrReadOnly
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.throttling import UserRateThrottle,AnonRateThrottle
 # Create your views here.
 
 class movie_list(views.APIView):
     # permission_classes=[permissions.IsAuthenticated]
+    throttle_classes=[UserRateThrottle,AnonRateThrottle]
     def get(self,request): # instead of get condition and can not use if serializer.is_valid() in get method
         movies=WatchList.objects.all()
         serializer=WatchListSerializer(movies,many=True)
