@@ -1162,6 +1162,18 @@ class ReviewList(generics.ListCreateAPIView): #ListAPIView with CreateAPIView is
 
 <div id="pagination">
     <a href="#topic">Topic</a>
+<h1>Pagination</h1>
+<h3>It provides pagination.</h3>
+
+`settings.py`
+
+```py
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5
+}
+```
+
 </div>
 </div>
 </main>
