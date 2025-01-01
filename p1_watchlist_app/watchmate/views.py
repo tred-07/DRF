@@ -8,6 +8,7 @@ from .permission import AdmimOrReadOnly,ReviewUserOrReadOnly
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.throttling import UserRateThrottle,AnonRateThrottle
 from .throttling import ReviewCreateThrottle,ReviewListThrottle
+from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 
 class movie_list(views.APIView):
@@ -111,11 +112,21 @@ class CreateReview(generics.CreateAPIView):
         
 class ReviewList(generics.ListCreateAPIView): #ListAPIView with CreateAPIView is a class based view that provides get and post method handlers.
     permission_classes=[ReviewUserOrReadOnly]
-    throttle_classes=[ReviewListThrottle]
+    # throttle_classes=[ReviewListThrottle]
     queryset=Review.objects.all()
     serializer_class=ReviewListSerializer
+    filter_backends=[DjangoFilterBackend]
+    filterset_fields=['review_user__username','active']
     
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView): # RetrieveUpdateDestroyAPIView is a class based view that provides get, put, patch and delete method handlers.
     permission_classes=[ReviewUserOrReadOnly]
     queryset=Review.objects.all()
     serializer_class=ReviewListSerializer
+
+
+
+class UserReviewDetail(generics.ListAPIView):
+    serializer_class=ReviewListSerializer
+    def get_queryset(self):
+        review_user=self.kwargs['username']
+        return Review.objects.filter(review_user__username=review_user)    

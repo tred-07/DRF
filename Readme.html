@@ -1079,6 +1079,61 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView): # RetrieveUpdateDestr
 
 </div>
 
+
+<div id="filteringIntro">
+    <a href="#topic">Topic</a>
+<h1>Filtering</h1>
+<h3>It provides filtering.</h3>
+<!-- <h3>Code part will be update within 7th January.</h3> -->
+
+`views.py`
+
+```py
+class UserReviewDetail(generics.ListAPIView):
+    serializer_class=ReviewListSerializer
+    def get_queryset(self):
+        review_user=self.kwargs['username']
+        return Review.objects.filter(review_user__username=review_user)
+```
+
+`urls.py`
+
+```py
+path('review/<str:username>',UserReviewDetail.as_view(),name='user-review-detail'), # review list for specific movie
+```    
+</div>
+
+<div id="genricFiltering">
+    <a href="#topic">Topic</a>
+    <h1>Generic Filtering</h1>
+    <h3>It provides generic filtering. Generic filtering can use only generic classes. It can not used in APIView.</h3>
+
+`settings.py`
+
+```py
+INSTALLED_APPS = [
+    ...
+    'django_filters',
+    ...
+]
+```
+
+`views.py`
+
+```py
+class ReviewList(generics.ListCreateAPIView): #ListAPIView with CreateAPIView is a class based view that provides get and post method handlers.
+    permission_classes=[ReviewUserOrReadOnly]
+    # throttle_classes=[ReviewListThrottle]
+    queryset=Review.objects.all()
+    serializer_class=ReviewListSerializer
+    filter_backends=[DjangoFilterBackend]
+    filterset_fields=['review_user__username','active']
+```
+
+
+<h3>URL format: http://127.0.0.1:8000/app/review?active=false , http://127.0.0.1:8000/app/review?active=false&review_user__username=admin</h3>
+</div>
+
 <div id="pagination">
     <a href="#topic">Topic</a>
 </div>
