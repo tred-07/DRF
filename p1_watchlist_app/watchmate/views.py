@@ -7,6 +7,7 @@ from rest_framework import decorators,response,status,mixins,generics,serializer
 from .permission import AdmimOrReadOnly,ReviewUserOrReadOnly
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.throttling import UserRateThrottle,AnonRateThrottle
+from .throttling import ReviewCreateThrottle,ReviewListThrottle
 # Create your views here.
 
 class movie_list(views.APIView):
@@ -83,8 +84,9 @@ class StreamDetailAV(views.APIView):
 
 
 class CreateReview(generics.CreateAPIView):
-    permission_classes=[AdmimOrReadOnly]
+    permission_classes=[permissions.IsAuthenticated]
     serializer_class=ReviewListSerializer
+    throttle_classes=[ReviewCreateThrottle]
     # queryset=Review.objects.all()
     def get_queryset(self):
         pk=self.kwargs.get('pk')
@@ -109,6 +111,7 @@ class CreateReview(generics.CreateAPIView):
         
 class ReviewList(generics.ListCreateAPIView): #ListAPIView with CreateAPIView is a class based view that provides get and post method handlers.
     permission_classes=[ReviewUserOrReadOnly]
+    throttle_classes=[ReviewListThrottle]
     queryset=Review.objects.all()
     serializer_class=ReviewListSerializer
     

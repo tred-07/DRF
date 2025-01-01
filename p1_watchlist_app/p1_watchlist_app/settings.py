@@ -138,7 +138,9 @@ REST_FRAMEWORK = {
         ],
         'DEFAULT_THROTTLE_RATES': {
             'anon': '3/day',
-            'user': '5/day'
+            'user': '5/day',
+            'create-review': '10/day', # check this line
+            'review-list': '1/day' # check this line
         }
 }
 

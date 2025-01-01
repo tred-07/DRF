@@ -980,7 +980,7 @@ REST_FRAMEWORK = {
     }
 ```
 
-<h3>For custom throttle</h3>
+<h3>For local throttle</h3>
 
 `settings.py`
 
@@ -1030,7 +1030,53 @@ class movie_list(views.APIView):
 <h1>Custom Rate and Throttle</h1>
 <h3>It provides custom rate and throttle.</h3>
 <h3>To implement this, create a custom throttle class and register it in the DEFAULT_THROTTLE_CLASSES list.</h3>
-<h3>Code part will update within 10 th January, 2025</h3>
+
+`settings.py`
+
+```py
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+       'rest_framework.authentication.TokenAuthentication',
+       'rest_framework.authentication.SessionAuthentication',
+       'rest_framework_simplejwt.authentication.JWTAuthentication',
+   ],
+   'DEFAULT_THROTTLE_CLASSES': [
+           'rest_framework.throttling.AnonRateThrottle',
+           'rest_framework.throttling.UserRateThrottle'
+       ],
+       'DEFAULT_THROTTLE_RATES': {
+           'anon': '3/day',
+           'user': '5/day',
+           'create-review': '10/day', # check this line
+           'review-list': '50/day' # check this line
+       }
+}
+```
+
+`throttling.py`
+
+```py
+from rest_framework.throttling import UserRateThrottle,AnonRateThrottle
+
+
+class ReviewCreateThrottle(UserRateThrottle):
+    scope='create-review'
+
+class ReviewListThrottle(UserRateThrottle):
+    scope='review-list'    
+```    
+
+`views.py`
+
+```py
+from rest_framework.throttling import UserRateThrottle,AnonRateThrottle
+class ReviewDetail(generics.RetrieveUpdateDestroyAPIView): # RetrieveUpdateDestroyAPIView is a class based view that provides get, put, patch and delete method handlers.
+    permission_classes=[ReviewUserOrReadOnly]
+    throttle_classes=[ReviewListThrottle]
+    queryset=Review.objects.all()
+    serializer_class=ReviewListSerializer
+```
+
 </div>
 
 <div id="pagination">
