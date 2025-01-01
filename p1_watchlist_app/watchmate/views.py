@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import WatchList,StreamPlatform,Review
 from django.http import HttpResponse,JsonResponse
-from rest_framework import viewsets,views
+from rest_framework import viewsets,views,filters
 from .serializers import WatchListSerializer,StreamPlatformSerializer,ReviewListSerializer
 from rest_framework import decorators,response,status,mixins,generics,serializers,permissions
 from .permission import AdmimOrReadOnly,ReviewUserOrReadOnly
@@ -115,8 +115,10 @@ class ReviewList(generics.ListCreateAPIView): #ListAPIView with CreateAPIView is
     # throttle_classes=[ReviewListThrottle]
     queryset=Review.objects.all()
     serializer_class=ReviewListSerializer
-    filter_backends=[DjangoFilterBackend]
+    filter_backends=[DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields=['review_user__username','active']
+    search_fields=['review_user__username','rating']
+    ordering_fields=['rating','created','updated']
     
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView): # RetrieveUpdateDestroyAPIView is a class based view that provides get, put, patch and delete method handlers.
     permission_classes=[ReviewUserOrReadOnly]

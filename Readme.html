@@ -1134,6 +1134,32 @@ class ReviewList(generics.ListCreateAPIView): #ListAPIView with CreateAPIView is
 <h3>URL format: http://127.0.0.1:8000/app/review?active=false , http://127.0.0.1:8000/app/review?active=false&review_user__username=admin</h3>
 </div>
 
+<div id="searchFilterAndOrderFilter">
+    <a href="#topic">Topic</a>
+    <h1>Search, Filter, and Order Filter</h1>
+    <h3>It provides search, filter, and order filter.</h3>
+
+`views.py`
+
+```py
+from rest_framework import generics, filters
+from django_filters.rest_framework import DjangoFilterBackend
+
+class ReviewList(generics.ListCreateAPIView): #ListAPIView with CreateAPIView is a class based view that provides get and post method handlers.
+    permission_classes=[ReviewUserOrReadOnly]
+    # throttle_classes=[ReviewListThrottle]
+    queryset=Review.objects.all()
+    serializer_class=ReviewListSerializer
+    filter_backends=[DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields=['review_user__username','active']
+    search_fields=['review_user__username','rating']
+    ordering_fields=['rating','created','updated']
+```
+
+<h3>Click filter icon and got this interface.</h3>
+<img src="./img/Search&Ordering&Filter.png" alt="">
+</div>
+
 <div id="pagination">
     <a href="#topic">Topic</a>
 </div>
