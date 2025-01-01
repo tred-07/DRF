@@ -9,6 +9,9 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.throttling import UserRateThrottle,AnonRateThrottle
 from .throttling import ReviewCreateThrottle,ReviewListThrottle
 from django_filters.rest_framework import DjangoFilterBackend
+from .pagination import WatchListPagination,ReviewListPagination
+
+
 # Create your views here.
 
 class movie_list(views.APIView):
@@ -114,6 +117,7 @@ class ReviewList(generics.ListCreateAPIView): #ListAPIView with CreateAPIView is
     permission_classes=[ReviewUserOrReadOnly]
     # throttle_classes=[ReviewListThrottle]
     queryset=Review.objects.all()
+    pagination_class=ReviewListPagination
     serializer_class=ReviewListSerializer
     filter_backends=[DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields=['review_user__username','active']

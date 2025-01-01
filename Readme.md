@@ -40,6 +40,9 @@
 <li><a href="#throttlingIntro">Throttling Intro</a></li>
 <li><a href="#throttleRate">Throttle Rate Limiting</a></li>
 <li><a href="#customRateAndThrottle">Custom Rate Throttle</a></li>
+<li><a href="#filteringIntro">Filter Intro</a></li>
+<li><a href="#genricFiltering">Generic Filter</a></li>
+<li><a href="#searchFilterAndOrderFilter">Search Filter And Order</a></li>
 <li><a href="#pagination">Pagination</a></li>
 </ol>
 </div>
@@ -1162,7 +1165,54 @@ class ReviewList(generics.ListCreateAPIView): #ListAPIView with CreateAPIView is
 
 <div id="pagination">
     <a href="#topic">Topic</a>
+<h1>Pagination</h1>
+<h3>It provides pagination.</h3>
+
+`settings.py`
+
+```py
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5
+}
+```
+<h3>This setting is for globally.</h3>
+
+
+`pagination.py`
+
+```py
+from rest_framework import pagination
+class WatchListPagination(pagination.PageNumberPagination):
+    page_size=2
+    page_size_query_param='page_size'
+    max_page_size=10
+
+
+class ReviewListPagination(pagination.PageNumberPagination):
+    page_size=1 # number of items per page
+    page_size_query_param='page_size' # parameter for pagination
+    max_page_size=10 # maximum page size
+```
+
+`views.py`
+
+```py
+from.pagination import WatchListPagination,ReviewListPagination
+class ReviewList(generics.ListCreateAPIView): #ListAPIView with CreateAPIView is a class based view that provides get and post method handlers.
+    permission_classes=[ReviewUserOrReadOnly]
+    # throttle_classes=[ReviewListThrottle]
+    queryset=Review.objects.all()
+    pagination_class=ReviewListPagination
+    serializer_class=ReviewListSerializer
+    filter_backends=[DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields=['review_user__username','active']
+    search_fields=['review_user__username','rating']
+    ordering_fields=['rating','created','updated']
+```
 </div>
+
+
 </div>
 </main>
 </body>
