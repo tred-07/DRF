@@ -654,7 +654,7 @@ path('api-auth/', include('rest_framework.urls')),  # Add this line
 ```
 </div>
 
-<div id="permission">
+<div id="permissions">
     <a href="#topic">Topic</a>
 <h1>Permission</h1>
 <h3>It provides authentication for API.</h3>
